@@ -126,6 +126,7 @@ const PostDetail = () => {
         </p>
       </Modal>
       <Modal
+        rootClassName="dark:bg-gray-800"
         title="Edit Post"
         open={isModalOpen}
         onCancel={showModal}
@@ -185,25 +186,27 @@ const PostDetail = () => {
             Back
           </Button>
           <div className="flex md:justify-center md:items-center m-2 md:m-4">
-            <div className="bg-white p-6 rounded-lg shadow-lg max-w-[560px]">
-              <h1 className="text-gray-700 font-bold text-center text-lg mb-4">
+            <div className="dark:bg-gray-800 bg-white p-6 rounded-lg shadow-lg max-w-[560px]">
+              <h1 className="dark:text-white text-gray-700 font-bold text-center text-lg mb-4">
                 {post?.title ?? "-"}
               </h1>
-              <span className="text-gray-700 font-bold text-base">
+              <span className="dark:text-white text-gray-700 font-bold text-base">
                 Description :
               </span>
-              <p className="text-gray-500 text-sm my-2">{post?.body}</p>
+              <p className="dark:text-white text-gray-500 text-sm my-2">
+                {post?.body}
+              </p>
               <div className="mt-4">
-                <h5 className="text-gray-700 font-bold text-base">
+                <h5 className="dark:text-white text-gray-700 font-bold text-base">
                   Author Detail :
                 </h5>
-                <p className="text-gray-600 text-sm">
+                <p className="dark:text-white text-gray-600 text-sm">
                   Name: {userAuthor?.name ?? "-"}
                 </p>
-                <p className="text-gray-600 text-sm">
+                <p className="dark:text-white text-gray-600 text-sm">
                   Email: {userAuthor?.email ?? "-"}
                 </p>
-                <p className="text-gray-600 text-sm">
+                <p className="dark:text-white text-gray-600 text-sm">
                   Gender: {userAuthor?.gender ?? "-"}
                 </p>
               </div>

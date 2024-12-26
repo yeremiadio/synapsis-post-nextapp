@@ -41,7 +41,8 @@ const PostsPage: React.FC = () => {
         <Fragment>
           <div className="p-4 flex justify-center items-center">
             <Input
-              rootClassName="bg-white w-full max-w-[320px]"
+              className="dark:text-white dark:placeholder:text-gray-200"
+              rootClassName="dark:text-white dark:bg-gray-800 bg-white w-full max-w-[320px]"
               value={search}
               placeholder="Search title..."
               onChange={(event) => setSearch(event.target.value)}
@@ -54,11 +55,15 @@ const PostsPage: React.FC = () => {
                   router.push(`${pageUrlsConfig.posts}/${post.id}`)
                 }
                 key={post.id}
-                className="bg-white p-4 m-2 rounded-lg shadow h-fit lg:h-[120px] hover:-translate-y-2
+                className="dark:bg-gray-700 bg-white p-4 m-2 rounded-lg shadow h-fit lg:h-[120px] hover:-translate-y-2
           transition-all cursor-pointer"
               >
-                <h2 className="text-gray-800 font-bold mb-2">{post.title}</h2>
-                <p className="text-gray-500 truncate">{post.body}</p>
+                <h2 className="dark:text-white text-gray-800 font-bold mb-2">
+                  {post.title}
+                </h2>
+                <p className=" dark:text-white text-gray-500 truncate">
+                  {post.body}
+                </p>
               </div>
             ))}
           </div>
