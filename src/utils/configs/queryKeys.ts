@@ -1,0 +1,6 @@
+export const QUERY_KEYS = {
+    POSTS: 'POSTS',
+    POST_DETAIL: 'POST_DETAIL',
+    USERS: 'USERS',
+    USER_DETAIL: 'USER_DETAIL'
+};
