@@ -4,18 +4,28 @@ import { getPosts } from "@/api/post";
 
 import Layout from "@/components/Layout";
 
-import { QUERY_KEYS } from "@/utils/configs/queryKeys";
-import { useRouter } from "next/router";
 import pageUrlsConfig from "@/utils/configs/pageUrlsConfig";
-import { Fragment } from "react";
-import { Spin } from "antd";
+import { QUERY_KEYS } from "@/utils/configs/queryKeys";
+import { Input, Pagination, Spin } from "antd";
+import { useRouter } from "next/router";
+import { Fragment, useState } from "react";
+import filterObjectIfValueIsEmpty from "@/utils/functions/filterObjectIfValueIsEmpty";
+import useDebounce from "@/utils/hooks/useDebounce";
 
 const PostsPage: React.FC = () => {
   const router = useRouter();
+  const [search, setSearch] = useState<string>("");
+  const debouncedSearch = useDebounce(search, 1000);
+  const [page, setPage] = useState<number>(1);
+  const [perPage, setPerPage] = useState<number>(10);
   const { data: queryData, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.POSTS],
+    queryKey: [QUERY_KEYS.POSTS, page, perPage, debouncedSearch],
     queryFn: async () => {
-      const response = await getPosts({});
+      const response = await getPosts({
+        page,
+        per_page: perPage,
+        ...filterObjectIfValueIsEmpty({ title: debouncedSearch }),
+      });
       return response;
     },
     placeholderData: keepPreviousData,
@@ -29,7 +39,14 @@ const PostsPage: React.FC = () => {
         </div>
       ) : (
         <Fragment>
-          <h1>Posts Page</h1>
+          <div className="p-4 flex justify-center items-center">
+            <Input
+              rootClassName="bg-white w-full max-w-[320px]"
+              value={search}
+              placeholder="Search title..."
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {queryData?.map((post) => (
               <div
@@ -44,6 +61,17 @@ const PostsPage: React.FC = () => {
                 <p className="text-gray-500 truncate">{post.body}</p>
               </div>
             ))}
+          </div>
+          <div className="justify-center items-center flex py-4">
+            <Pagination
+              total={100}
+              onChange={(page, pageSize) => {
+                setPage(page);
+                setPerPage(pageSize);
+              }}
+              defaultPageSize={10}
+              defaultCurrent={1}
+            />
           </div>
         </Fragment>
       )}

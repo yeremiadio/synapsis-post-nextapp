@@ -5,7 +5,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="bg-slate-50 min-h-screen">
       <Navbar />
-      <main className="mt-14">{children}</main>
+      <main className="mt-16">{children}</main>
     </div>
   );
 };
