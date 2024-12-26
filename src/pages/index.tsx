@@ -1,12 +1,49 @@
-import { Button, Form, Input } from "antd";
+import CookieManager from "@/utils/configs/cookieConfig";
+import { Button, Form, FormProps, Input } from "antd";
+import { useCallback, useState } from "react";
+
+const cookieManager = new CookieManager();
+
+type FieldType = {
+  name: string;
+  accessToken: string;
+};
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const onFinish: FormProps<FieldType>["onFinish"] = ({
+    name,
+    accessToken,
+  }) => {
+    setIsLoading(true);
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setIsLoading(false);
+        cookieManager.addCookies({
+          accessToken,
+          name,
+        });
+        resolve();
+      }, 1000);
+    });
+  };
+
   return (
     <div className="justify-center items-center flex h-screen bg-slate-50">
       <div className="bg-white px-4 py-6 rounded-lg shadow-lg w-full lg:w-[420px] mx-2">
-        <h2 className="text-gray-700 font-bold text-lg mb-1 mt-2 text-center">Synapsis Post App</h2>
-        <p className="text-gray-600 text-base mt-1 mb-2 text-center">Welcome back</p>
-        <Form layout="vertical" className="w-full">
+        <h2 className="text-gray-700 font-bold text-lg mb-1 mt-2 text-center">
+          Synapsis Post App
+        </h2>
+        <p className="text-gray-600 text-base mt-1 mb-2 text-center">
+          Welcome back
+        </p>
+        <Form
+          name="auth"
+          onFinish={onFinish}
+          layout="vertical"
+          className="w-full"
+        >
           <Form.Item
             label="Name"
             name="name"
@@ -26,7 +63,12 @@ const Home = () => {
           </Form.Item>
 
           <Form.Item label={null} className="mb-0">
-            <Button className="w-full" type="primary" htmlType="submit">
+            <Button
+              loading={isLoading}
+              className="w-full"
+              type="primary"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Form.Item>
