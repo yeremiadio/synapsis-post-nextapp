@@ -3,6 +3,7 @@ import pageUrlsConfig from "@/utils/configs/pageUrlsConfig";
 import { Button, Form, FormProps, Input } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const cookieManager = new CookieManager();
 
@@ -22,6 +23,7 @@ const Home = () => {
     return new Promise<void>((resolve) => {
       setTimeout(() => {
         setIsLoading(false);
+        toast.success(`Hello Welcome!, ${name}`);
         cookieManager.addCookies({
           accessToken,
           name,
