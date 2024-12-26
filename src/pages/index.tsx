@@ -1,6 +1,8 @@
 import CookieManager from "@/utils/configs/cookieConfig";
+import pageUrlsConfig from "@/utils/configs/pageUrlsConfig";
 import { Button, Form, FormProps, Input } from "antd";
-import { useCallback, useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 const cookieManager = new CookieManager();
 
@@ -11,7 +13,7 @@ type FieldType = {
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const router = useRouter();
   const onFinish: FormProps<FieldType>["onFinish"] = ({
     name,
     accessToken,
@@ -24,6 +26,7 @@ const Home = () => {
           accessToken,
           name,
         });
+        router.push(pageUrlsConfig.posts);
         resolve();
       }, 1000);
     });

@@ -14,12 +14,12 @@ export const getPostById = async (id: number): Promise<Post> => {
     return response.data;
 };
 
-export const createPost = async (post: Post): Promise<Post> => {
+export const createPost = async (post: Partial<Post>): Promise<Post> => {
     const response = await axiosInstance.post(`${API_URLS.posts}`, post);
     return response.data;
 };
 
-export const updatePost = async (id: number, post: Post): Promise<Post> => {
+export const updatePost = async (id: number, post: Partial<Post>): Promise<Post> => {
     const response = await axiosInstance.put(`${API_URLS.posts}/${id}`, post);
     return response.data;
 };

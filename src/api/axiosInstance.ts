@@ -1,3 +1,4 @@
+import CookieManager from '@/utils/configs/cookieConfig';
 import axios from 'axios';
 
 const axiosInstance = axios.create({
@@ -11,7 +12,8 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         if (config.method !== 'get') {
-            const token = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
+            const cookieManager = new CookieManager()
+            const token = cookieManager.getCookie('accessToken');
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
